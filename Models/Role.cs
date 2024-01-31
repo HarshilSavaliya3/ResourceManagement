@@ -5,6 +5,7 @@ namespace ResourceManagement.UI.Models
 {
     public class Role
     {
+        [DisplayName("Role")]
         public int RoleId { get; set; }
 
         [Required]

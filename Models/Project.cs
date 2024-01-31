@@ -5,6 +5,7 @@ namespace ResourceManagement.UI.Models
 {
     public class Project
     {
+        [DisplayName("Project")]
         public int ProjectId { get; set; }
 
         [Required]
