@@ -3,6 +3,8 @@ using ResourceManagement.UI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -10,6 +12,7 @@ builder.Services.AddDbContext<ResourceManagementDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+
 
 var app = builder.Build();
 

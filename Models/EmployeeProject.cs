@@ -15,6 +15,6 @@ namespace ResourceManagement.UI.Models
         public int Allocation { get; set; }
         public Employee Employee { get; set; } = null!;
         public Project Project { get; set; } = null!;
-        public virtual Role? Role { get; set; }
+        public Role Role { get; set; } = null!;
     }
 }

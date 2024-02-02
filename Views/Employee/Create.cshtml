@@ -17,8 +17,8 @@
                 <select asp-for="Employee.RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
             </div>
              <div class="form-group">
-                <label asp-for="Project.ProjectId" class="control-label"></label>
-                <select asp-for="Project.ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Employee.EmpCode" class="control-label"></label>
@@ -34,6 +34,11 @@
                 <label asp-for="Employee.LastName" class="control-label"></label>
                 <input asp-for="Employee.LastName" class="form-control" />
                 <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Allocation" class="control-label"></label>
+                <input asp-for="Allocation" class="form-control" />
+                <span asp-validation-for="Allocation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Employee.ManagerId" class="control-label"></label>

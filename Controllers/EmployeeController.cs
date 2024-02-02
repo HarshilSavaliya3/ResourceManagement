@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using ResourceManagement.UI.Data;
 using ResourceManagement.UI.Models;
@@ -14,10 +16,12 @@ namespace ResourceManagement.UI.Controllers
     public class EmployeeController : Controller
     {
         private readonly ResourceManagementDbContext _context;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(ResourceManagementDbContext context)
+        public EmployeeController(ResourceManagementDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Employee
@@ -59,16 +63,34 @@ namespace ResourceManagement.UI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,EmpCode,FirstName,LastName,ManagerId,RoleId")] EmployeeViewModel employeeViewModel)
+        public async Task<IActionResult> Create(EmployeeViewModel employeeViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employeeViewModel);
+                var employee = _mapper.Map<Employee>(employeeViewModel.Employee);
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+
+                var employeeProject = new EmployeeProject
+                {
+                    ProjectId = employeeViewModel.ProjectId,
+                    EmployeeId = employee.EmployeeId,
+                    RoleId = employee.RoleId,
+                    Allocation = employeeViewModel.Allocation
+                };
+
+                _context.Add(employeeProject);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                // Log or handle validation errors
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                // Handle errors, log them, or return an error response
+            }
             ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName", employeeViewModel.Employee.RoleId);
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectName", employeeViewModel.Project.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "ProjectId", "ProjectName", employeeViewModel.ProjectId);
             return View(employeeViewModel);
         }
 
