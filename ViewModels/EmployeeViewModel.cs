@@ -1,4 +1,5 @@
 ﻿using ResourceManagement.UI.Models;
+using System.ComponentModel;
 
 namespace ResourceManagement.UI.ViewModels
 {
@@ -6,8 +7,9 @@ namespace ResourceManagement.UI.ViewModels
     {
         public Employee Employee { get; set; }
 
-        public Project Project { get; set; }
+        [DisplayName("Project")]
+        public int ProjectId { get; set; }
 
-        //public EmployeeProject? EmployeeProject { get; set; }
+        public int Allocation { get; set; }
     }
 }

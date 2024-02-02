@@ -15,7 +15,7 @@ namespace ResourceManagement.UI.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,14 +123,12 @@ namespace ResourceManagement.UI.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeProjects_RoleId",
                 table: "EmployeeProjects",
-                column: "RoleId",
-                unique: true);
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_RoleId",
                 table: "Employees",
-                column: "RoleId",
-                unique: true);
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectRoles_RoleId",
